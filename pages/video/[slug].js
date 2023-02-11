@@ -52,9 +52,9 @@ export const getServerSideProps = async (pageContext) => {
 const Video = ({ video }) => {
     console.log(video)
   return (
-    <>
+    <div>
         
-    </>
+    </div>
   )
 }
 

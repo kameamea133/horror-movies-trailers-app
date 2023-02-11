@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import { gql, GraphQLClient } from 'graphql-request'
 import Section from '@/components/Section'
+import Navbar from '@/components/Navbar'
 
 export const getStaticProps = async () => {
   const url = process.env.ENDPOINT
@@ -41,12 +42,22 @@ const videos = data.videos
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({videos}) {
-console.log(videos.length)
+
 
 
   const randomVideo = ( videos ) => {
     return videos[Math.floor(Math.random() * videos.length)]
   }
+
+// function who filter the videos by genre
+const filterVideos = (videos, genre) => {
+  return videos.filter((video) => video.tags.includes(genre))
+}
+
+const unSeenVideos = (videos) => {
+  return videos.filter(video => video.seen == false || video.seen == null)
+}
+
   return (
     <>
       <Head>
@@ -56,18 +67,20 @@ console.log(videos.length)
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+      <Navbar />
        <div className='app'>
         <div className='main-video'>
           <img src={randomVideo(videos).thimbnail.url} alt={randomVideo(videos).title}/>
         </div> 
-       </div>
-       <div className='video-feed'>
-          <Section genre={'Vampires'}/>
-          <Section genre={'Monsters'}/>
-          <Section genre={'Zombies'}/>
-          <Section genre={'Possession'}/>
-          <Section genre={'Serial Killers'}/>
+        <div className='video-feed'>
+          <Section genre={'Recommended for you'} videos={unSeenVideos(videos)}/>
+          <Section genre={'Clown'} videos={filterVideos(videos, 'Clown')}/>
+          <Section genre={'Monsters'} videos={filterVideos(videos, 'Monsters')}/>
+          <Section genre={'Classic'} videos={filterVideos(videos, 'Classic')}/>
+          <Section genre={'Possession'} videos={filterVideos(videos, 'Possession')}/>
+          <Section genre={'Serial Killers'} videos={filterVideos(videos, 'Serial Killers')}/>
 
+       </div>
        </div>
       </main>
     </>
