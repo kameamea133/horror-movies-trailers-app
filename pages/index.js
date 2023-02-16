@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
     }
   })
 
-  const query = gql`
+  const videoQuery = gql`
   query {
     videos{
       createdAt,
@@ -29,11 +29,26 @@ export const getStaticProps = async () => {
     }
   }
   `
-  const data = await graphQLClient.request(query)
+
+  const accountQuery = gql `
+  query {
+    account(where: { id: "cldmzx149056a0burcvhi2hq6"}) {
+      username
+      avatar {
+        url
+      }
+    }
+  }
+  `
+  const data = await graphQLClient.request(videoQuery)
 const videos = data.videos
+const accountData = await graphQLClient.request(accountQuery)
+const account = accountData.account
+
   return {
     props : {
       videos,
+      account
     }
   }
 }
@@ -41,9 +56,9 @@ const videos = data.videos
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({videos}) {
+export default function Home({videos ,account})  {
 
-
+  
 
   const randomVideo = ( videos ) => {
     return videos[Math.floor(Math.random() * videos.length)]
@@ -67,7 +82,7 @@ const unSeenVideos = (videos) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-      <Navbar />
+      <Navbar account={account}/>
        <div className='app'>
         <div className='main-video'>
           <img src={randomVideo(videos).thimbnail.url} alt={randomVideo(videos).title}/>

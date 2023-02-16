@@ -9,15 +9,17 @@ html, body {
 
 .main-video {
     width: 100vw;
-    height: 30vh;
+    height: 50vh;
     overflow: hidden;
     position: relative;
     margin-bottom: 50px;
+    
 }
 
 
 .main-video img {
     width: 100%;
+    
 }
 .app {
     margin: 20px;
@@ -33,4 +35,54 @@ html, body {
 
 .logo-image {
     border-radius: 9999px;
+}
+
+.navbar {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+.video-image {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.info {
+    position: relative;
+    margin-top: 30%;
+    margin-left: 50px;
+    max-width: 50%;
+}
+
+.video-overlay {
+    position: absolute;
+}
+
+.info-footer {
+    height: 100vh;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    
+}
+
+.account-info {
+    display: flex;
+    height:100%;
+    
+    align-items: end;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
 }
